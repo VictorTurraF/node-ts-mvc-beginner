@@ -1,0 +1,23 @@
+{
+  "name": "node-ts-mvc-learning",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Victor Turra <victor.florencio@univem.edu.br>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.4.1",
+    "tsup": "^7.1.0",
+    "tsx": "^3.12.7",
+    "typescript": "^5.1.6",
+    "vitest": "^0.33.0"
+  },
+  "scripts": {
+    "start": "tsx src/server.ts",
+    "start:dev": "tsx watch src/server.ts",
+    "build": "tsup src",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "zod": "^3.21.4"
+  }
+}
