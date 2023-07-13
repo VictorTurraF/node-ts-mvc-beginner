@@ -1,23 +1,20 @@
 import { randomUUID } from "crypto";
 import db from "../../core/database";
+import { Str } from "../../core/utils";
 
 export class Model {
   protected table: string;
   protected id: string;
-  protected fillable: (keyof this)[];
+  public fillable: string[];
 
   public constructor(jsonData: object) {
     this.serialize(jsonData);
   }
 
-  private toCamelCase(snakeCase: string): string {
-    return snakeCase.replace(/_(\w)/g, (_, c) => c.toUpperCase());
-  }
-
   private serialize(data: object) {
     Object.entries(data).forEach(([key, value]) => {
 
-      const camelCaseKey = this.toCamelCase(key);
+      const camelCaseKey = Str.toCamelCase(key);
 
       Object.defineProperty(this, camelCaseKey, {
         value: value,
@@ -37,12 +34,13 @@ export class Model {
     ])
     
     this.fillable.map(field => {
-      inserts.set(String(field), this[field])
+      inserts.set(Str.toSnakeCase(field), this[field as keyof Model])
     })
 
     const columnNames = Array.from(inserts.keys()).join(", ")
     const columnValues = Array.from(inserts.values())
     const placeholders = columnValues.map(() => "?").join(", ")
+    
     const sqlQuery = `INSERT INTO ${this.table} (${columnNames}) VALUES (${placeholders})`
 
     db.serialize(() => {
@@ -50,6 +48,10 @@ export class Model {
     })
 
     return this
+  }
+
+  public static all() {
+    
   }
 
   private handleSQLError (err: any) {

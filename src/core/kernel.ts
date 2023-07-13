@@ -11,7 +11,7 @@ export class Kernel {
   }
 
   public handle(request: HttpRequest) {
-    this.router.handle(request);
+    return this.router.handle(request);
   }
 
   public static create() {
@@ -19,7 +19,6 @@ export class Kernel {
   }
 
   private initDatabase() {
-    console.log("initing db");
     db.serialize(() => {
       db.run(`
         CREATE TABLE IF NOT EXISTS cars (
@@ -33,9 +32,10 @@ export class Kernel {
       db.run(`
         CREATE TABLE IF NOT EXISTS orders (
           id UUID PRIMARY KEY,
-          car_id INT,
+          car_id UUID,
           start_date DATE,
-          end_date DATE
+          end_date DATE,
+          FOREIGN KEY (car_id) REFERENCES cars(id)
         );
       `)
     });

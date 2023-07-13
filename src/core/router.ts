@@ -19,16 +19,21 @@ export default class Router {
     const { httpVerb, urlPath } = request;
     
     const controllerMethod = this.methodBinds.get(httpVerb);
+
+    if (!controllerMethod)
+      throw new Error('Method not found')
+
     const contollerConfig = this.routeBinds.get(urlPath)
 
     if (!contollerConfig)
-      return
+      throw new Error('Controller not found')
 
     const ControllerClass = contollerConfig.controller;
     const controllerInstance = new ControllerClass();
 
+
     if (controllerMethod) {
-      controllerInstance[controllerMethod](request);
+      return controllerInstance[controllerMethod](request);
     }
   }
 }

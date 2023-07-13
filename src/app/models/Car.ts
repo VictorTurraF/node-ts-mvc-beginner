@@ -4,7 +4,7 @@ import Order from "./Order";
 export default class Car extends Model {
   protected table = "cars";
 
-  protected fillable: (keyof Car)[] = [
+  public fillable: (keyof Car)[] = [
     "color",
     "year",
     "number",
