@@ -7,8 +7,6 @@ const app = Kernel.create();
 const server = http.createServer((request, response) => {
   let body = "";
 
-  console.log(request.headers)
-
   // Collect the data chunks from the request
   request.on('data', chunk => {
     body += chunk;
@@ -16,7 +14,7 @@ const server = http.createServer((request, response) => {
 
   // Process the complete request body
   request.on('end', () => {
-    const requestBody = JSON.parse(body)
+    const requestBody = JSON.parse(body || "{}")
 
     const controllerResponse = app.handle({
       httpVerb: request.method || "GET",

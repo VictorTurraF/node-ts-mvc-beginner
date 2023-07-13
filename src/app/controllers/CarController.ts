@@ -1,32 +1,33 @@
-import { HttpRequest } from "../../core/type"
-import Car from "../models/Car"
-import { View } from "../views/View"
+import { HttpRequest } from "../../core/type";
+import Car from "../models/Car";
+import { View } from "../views/View";
 
 class CarController {
-  constructor() {
-    console.log("car controller")
-  }
-  
   public index() {
-    console.log("index")
+    const car = new Car();
+    const cars = car.all();
+
+    return cars.map((car) => View.json(car));
   }
 
   public create(request: HttpRequest) {
-    const car = new Car(request.body)
+    const car = new Car(request.body);
 
-    const createdCar = car.save()
-    
+    const createdCar = car.save();
+
     return View.json(createdCar);
   }
 
-  public update() {
-    console.log("update")
+  public update(request: HttpRequest) {
+    const car = new Car(request.body);
+
+    const updatedCar = car.update()
+
+    return View.json(updatedCar);
   }
 
   public delete() {
-    console.log("delete")
   }
-
 }
 
-export default CarController
+export default CarController;

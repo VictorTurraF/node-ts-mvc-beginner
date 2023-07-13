@@ -3,12 +3,13 @@ import Order from "../models/Order";
 import { View } from "../views/View";
 
 class OrderController {
-  constructor() {
-    console.log("order controller");
-  }
 
   public index() {
-    console.log("index");
+    const order = new Order()
+  
+    const allOrders = order.all()
+
+    return allOrders.map(order => View.json(order))
   }
 
   public create(request: HttpRequest) {
@@ -19,12 +20,15 @@ class OrderController {
     return View.json(createdOrder);
   }
 
-  public update() {
-    console.log("update");
+  public update(request: HttpRequest) {
+    const order = new Order(request.body);
+
+    const updatedOrder = order.update();
+
+    return View.json(updatedOrder);
   }
 
   public delete() {
-    console.log("delete");
   }
 }
 

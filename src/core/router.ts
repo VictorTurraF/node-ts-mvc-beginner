@@ -6,7 +6,7 @@ export default class Router {
   private methodBinds = new Map([
     ["GET", "index"],
     ["POST", "create"],
-    ["PUT", "udpate"],
+    ["PUT", "update"],
     ["DELETE", "delete"],
   ]);
 
@@ -17,7 +17,6 @@ export default class Router {
 
   public handle(request: HttpRequest) {
     const { httpVerb, urlPath } = request;
-    
     const controllerMethod = this.methodBinds.get(httpVerb);
 
     if (!controllerMethod)
@@ -30,6 +29,7 @@ export default class Router {
 
     const ControllerClass = contollerConfig.controller;
     const controllerInstance = new ControllerClass();
+
 
 
     if (controllerMethod) {
