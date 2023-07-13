@@ -1,4 +1,5 @@
 import { HttpRequest } from "../../core/type"
+import Car from "../models/Car"
 
 class CarController {
   constructor() {
@@ -10,7 +11,11 @@ class CarController {
   }
 
   public create(request: HttpRequest) {
-    
+    const car = new Car(request.body)
+
+    const createdCar = car.save()
+
+    return
   }
 
   public update() {

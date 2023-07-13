@@ -18,6 +18,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "sqlite3": "^5.1.6",
     "zod": "^3.21.4"
   }
 }
